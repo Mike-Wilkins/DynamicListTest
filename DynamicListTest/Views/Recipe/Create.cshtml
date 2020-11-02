@@ -1,0 +1,60 @@
+﻿@model DynamicListTest.Models.Recipe
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Recipe</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div id="recipeItemsContainer">
+                @Html.EditorFor(model => model.Items)
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <input class="btn btn-primary" type="button" id="btnAdd" value="Add Ingredient" />
+                </div>
+
+                <div class="col-md-2">
+                    <input type="submit" value="Create" class="btn btn-success" style="margin-left: 20px" />
+                </div>
+            </div>
+
+            
+        </form>
+    </div>
+</div>
+<hr />
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $("#btnAdd").on('click', function () {
+            $.ajax({
+                async: true,
+                data: $('#form').serialize(),
+                type: "POST",
+                url: '/Recipe/AddRecipeItem',
+                success: function (partialView) {
+                    console.log("partialView: "+partialView);
+                    $('#recipeItemsContainer').html(partialView);
+                }
+            });
+        });
+    </script>
+}

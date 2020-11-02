@@ -1,0 +1,16 @@
+﻿@model DynamicListTest.Models.RecipeItem
+
+
+<div class="row">
+    <div class="col-md-4">
+        @*<form asp-action="RecipeItem">*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Ingredient" class="control-label"></label>
+                <input asp-for="Ingredient" class="form-control" />
+                <span asp-validation-for="Ingredient" class="text-danger"></span>
+            </div>
+        @*</form>*@
+    </div>
+</div>
